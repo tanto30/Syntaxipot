@@ -1,10 +1,11 @@
+import CGIHandler
 import urllib.parse as urlparse
-from cgi import parse_header, parse_multipart
 
-from io import StringIO
+
 from os.path import isfile
 from Classifier import is_malicious
 from PageGenerator import generate_page
+from cgi import parse_header, parse_multipart
 from http.server import BaseHTTPRequestHandler, HTTPServer
 
 
@@ -34,7 +35,7 @@ class TestHTTPServerRequestHandler(BaseHTTPRequestHandler):
             :returns post variables dict and post data as string """
         ctype, pdict = parse_header(self.headers['content-type'])
         if ctype == 'multipart/form-data':  # TODO: Handle this case later.
-            postvars = {}
+            postvars = parse_multipart(self.rfile, pdict)
             post_string = ""
         elif ctype == 'application/x-www-form-urlencoded':
             length = int(self.headers['content-length'])
