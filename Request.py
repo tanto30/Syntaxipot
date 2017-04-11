@@ -37,7 +37,7 @@ class Request:
         self.method = method
         # Parse the url into 6 components  <scheme>://<netloc>/<path>;<params>?<query>#<fragment>
         url_parsed = urlparse.urlparse(path)
-        self.path = url_parsed.path
+        self.path = "." + url_parsed.path
         self.query_params = url_parsed.query
 
         self.POST_params_str = post_parameters
@@ -45,3 +45,9 @@ class Request:
 
         # construct a dictionary containing the headers
         self.headers = dict(headers.items())
+
+    def __repr__(self):
+        return str(self.__dict__)
+
+    def __str__(self):
+        return self.__repr__()

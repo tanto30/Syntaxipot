@@ -11,27 +11,19 @@ from http.server import BaseHTTPRequestHandler, HTTPServer
 
 #  HTTPRequestHandler class
 class HTTPHandler(BaseHTTPRequestHandler):
-    # GET
-    @staticmethod
-    def __check_path(request_path):
-        """@:return True if requests an exisiting page, valid HTTP request, according to protocol"""
-        requested_file = urlparse.urlparse(request_path).path
-        if not isfile("." + requested_file):
-            return False
-        return True
 
-    def is_valid(self):
+    def is_valid(self, request):
         """Check if get request is valid (currently just check if file exists)
             Error handling and response should be done here
         """
-        requested_file = urlparse.urlparse(self.path).path
-        if not HTTPHandler.__check_path(requested_file):
+        if not isfile(request.path):
             self.send_error(404)
             return False
         return True
 
     @staticmethod
     def generate_response_file(request):
+        out = CGIHandler.serve_file(request)
         return CGIHandler.serve_file(request)
 
     def request_factory(self, request_str, post_str='', post_dict=None):
@@ -102,7 +94,7 @@ class HTTPHandler(BaseHTTPRequestHandler):
         # HTTP request str ends with two CRLF's (\r\n\r\n)
         http_request_str = self.requestline + "\r\n" + str(self.headers)
         request = self.request_factory(http_request_str)
-        if self.is_valid():
+        if self.is_valid(request):
             # Currently a valid HTTP request
             if not is_malicious(request.raw_request):
                 # Currently non-malicious HTTP request

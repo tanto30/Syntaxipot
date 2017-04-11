@@ -32,7 +32,7 @@ def handle_php(request_obj):
     query_params = sanitize(request_obj.query_params)
     params = query_params.split('&')
     sanitized_params = [sanitize(param) for param in params]
-    return check_output(['php-cgi', '-f', request_obj.path, *sanitized_params])
+    return check_output(['php-cgi', '-f', request_obj.path, *sanitized_params], shell=True)
 
 
 def serve_file(request_obj):
