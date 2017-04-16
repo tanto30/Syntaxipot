@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Error</title>
+</head>
+<body>
+    <b>SQL Error:</b>
+        <p>You have an error in your SQL syntax; check the manuak that
+        corresponds to your MySQL server version for the right syntax to
+        use.</p>
+    <b>Query:</b>
+        <p>{query}</p>
+</body>
+</<html>
