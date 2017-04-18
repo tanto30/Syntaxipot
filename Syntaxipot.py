@@ -1,9 +1,8 @@
 #!\Python36\python.exe
 import Classifier
 import RequestGenerator
-
-from ServePage import serve_page
 from PageGenerator import generate_page_filename
+from ServePage import serve_page
 
 
 class HoneypotRequestHandler:
@@ -35,5 +34,5 @@ def run():
     handler = HoneypotRequestHandler()
     print(handler.handle_request())
 
-if __name__ == "__main__":
-    run()
+
+run()
