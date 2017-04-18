@@ -1,4 +1,5 @@
-import urllib.parse as urlparse
+import urllib.parse
+
 
 class Request:
     """
@@ -36,7 +37,7 @@ class Request:
         self.raw_request = raw_request
         self.method = method
         # Parse the url into 6 components  <scheme>://<netloc>/<path>;<params>?<query>#<fragment>
-        url_parsed = urlparse.urlparse(path)
+        url_parsed = urllib.parse.urlparse(path)
         self.path = "." + url_parsed.path
         self.query_params = url_parsed.query
 
@@ -51,3 +52,34 @@ class Request:
 
     def __str__(self):
         return self.__repr__()
+
+
+class ClassifiedRequest(Request):
+    """
+    This class represents an HTTP request which can be easily handled,
+    Child Class of request, ClassifiedRequest is intended to be used by the Classifier,
+    to check if a request is malicious and what type of attack it is if is malicious.
+    """
+    def __init__(self, request, malicious, attack_type):
+
+        """
+        :param malicious: boolean, True if request is malicious 
+        :param attack_type: string, the type of the attack, e.g., 'xss', 'sqli',
+        or an empty string if not malicious
+        """
+        Request.__init__(self, request.ip, request.port, request.raw_request,
+                         request.method, request.path, request.headers,
+                         request.POST_params_str, request.POST_params_dict)
+        self.malicious = malicious
+        self.type = attack_type
+        self.return_path = self.path
+
+    def is_malicious(self):
+        return self.malicious
+
+    def set_return_path(self, path):
+        """
+        Sets page to return for client(could be generated malicious page)
+        :param path: string, path to file, must point to an existing file. e.g. './index.html'
+        """
+        self.return_path = path

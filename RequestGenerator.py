@@ -1,7 +1,10 @@
-from Request import Request
-from os import environ  # The environment variables.
-import urllib
 import sys
+import urllib.parse
+
+from os import environ  # The environment variables.
+from Request import Request
+
+
 
 
 def generate_request():
