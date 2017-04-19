@@ -5,7 +5,7 @@
 </head>
 <body>
     <b>SQL Error:</b>
-        <p>You have an error in your SQL syntax; check the manuak that
+        <p>You have an error in your SQL syntax; check the manual that
         corresponds to your MySQL server version for the right syntax to
         use.</p>
     <b>Query:</b>
