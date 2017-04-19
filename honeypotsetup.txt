@@ -14,6 +14,6 @@ xampp/cgi-bin/Syntaxipot.py:
 To make all requests to any page remap to our Syntaxipot.py, create an .htaccess file in the document root (e.g. xampp/htdocs) and in the file
 xampp/htdocs/.htaccess:
 	RewriteEngine On
-	RewriteCond %{REQUEST_URI} !=/cgi-bin/Syntaxipot.py
+	#RewriteCond %{REQUEST_URI} !=/cgi-bin/syntaxipot.py
 	RewriteCond %{REMOTE_ADDR} !=%{SERVER_ADDR}
-	RewriteRule ^ /cgi-bin/Syntaxipot.py
+	RewriteRule .* /cgi-bin/syntaxipot.py
