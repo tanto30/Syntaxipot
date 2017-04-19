@@ -3,11 +3,11 @@ import pylibinjection
 from Request import ClassifiedRequest
 
 
-def detect_sqli():
-    return pylibinjection.detect_sqli(bytes(msg, encoding="utf-8"))["sqli"]
+def detect_sqli(request):
+    return pylibinjection.detect_sqli(bytes(request, encoding="utf-8"))["sqli"]
 
 
-def detect_xss():
+def detect_xss(request):
     return False
 
 
@@ -30,5 +30,4 @@ def classify(request):
             attack_type = checks[check]
             break
     return ClassifiedRequest(request, malicious, attack_type)
-
 
