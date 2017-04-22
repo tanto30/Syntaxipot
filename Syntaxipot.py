@@ -27,13 +27,10 @@ class HoneypotRequestHandler:
 			page_name = self.__handle_legitimate()
 		classified_request.set_return_path(page_name)
 		return serve_page(classified_request)
-ד
+
 
 def run():
 	handler = HoneypotRequestHandler()
-	with open("debug.txt","a") as f:
-		f.write("START\n")
-		print(handler.handle_request())
-		# print("Content-Type: text/plain\r\n\r\nhello world")
-		f.write("END\n")
+	print(handler.handle_request())
+
 run()
