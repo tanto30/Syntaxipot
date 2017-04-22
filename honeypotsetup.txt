@@ -1,19 +1,8 @@
-Apache setup to make honeypot work
-add/modify the files contents to include the stated lines (lines may already be there or only need modification/uncommenting so check before)
-xampp/apache/conf/httpd.conf:
-	AddHandler cgi-script .cgi .pl .asp .py
-	Options Indexes FollowSymLinks ExecCGI
-	AllowOverride All
-	LoadModule rewrite_module modules/mod_rewrite.so #(Line needs to be uncommented)
 
-add shebang line for python for example (C:\Python36\python.exe):
-xampp/cgi-bin/Syntaxipot.py:
+Move the httpd.conf file in this directory to xampp/apache/conf/
+(Replace the file that is already there)
+
+Add shebang line for python in xampp/cgi-bin/Syntaxipot.py 
+For example (C:\Python36\python.exe):
 	#!/Python36/python.exe
 	"""rest of python code"""
-
-To make all requests to any page remap to our Syntaxipot.py, create an .htaccess file in the document root (e.g. xampp/htdocs) and in the file
-xampp/htdocs/.htaccess:
-	RewriteEngine On
-	#RewriteCond %{REQUEST_URI} !=/cgi-bin/syntaxipot.py
-	RewriteCond %{REMOTE_ADDR} !=%{SERVER_ADDR}
-	RewriteRule .* /cgi-bin/syntaxipot.py
