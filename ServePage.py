@@ -20,12 +20,18 @@ def serve_page(request_obj):
 	:return: HTTP Response for the request as str 
 	"""
 	# Full path to requested file
-	url = "http://localhost" + request_obj.return_path
+	url = "http://127.0.0.1" + request_obj.return_path
 	# POST data as bytes object, None if request_obj.method = 'GET'
+	with open("debug.txt","a") as f:
+		f.write(url+"\n")
 	data = request_obj.POST_params_bytes
 	req = urllib.request.Request(url, data,
 								 request_obj.headers,
 								 method=request_obj.method)
 	resp = urllib.request.urlopen(req)
+	with open("debug.txt","a") as f:
+		f.write("END REQ\n")
 	resp_str = response_to_str(resp)
+	with open("debug.txt","a") as f:
+		f.write("END R2S\n")
 	return resp_str
