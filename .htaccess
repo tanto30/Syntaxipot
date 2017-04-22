@@ -1,4 +1,0 @@
-RewriteEngine On
-#RewriteCond %{REQUEST_URI} !=/cgi-bin/syntaxipot.py
-RewriteCond %{REMOTE_ADDR} !=%{SERVER_ADDR}
-RewriteRule .* /cgi-bin/syntaxipot.py
