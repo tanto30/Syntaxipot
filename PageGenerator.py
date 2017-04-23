@@ -2,7 +2,7 @@ import os.path
 
 
 def sqli_error_page(query):
-    file_name = "fake_sqli_error_page.html"
+    file_name = "fake_page.txt"
     with open(file_name, "w") as f:
         fpage = open("fake_page.txt")
         page = fpage.read()

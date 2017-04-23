@@ -11,23 +11,23 @@ class HoneypotRequestHandler:
     def __init__(self):
         self.request = RequestGenerator.generate_request()
 
-    def __handle_malicious(self, classified_request):
-        log(classified_request)
+    def __handle_malicious(self):
+        log(self.request)
         page_name = generate_page_filename(self.request.query_params,
-                                           classified_request.attack_type)
+                                           self.request.attack_type)
         return page_name
 
     def __handle_legitimate(self):
         return self.request.path
 
     def handle_request(self):
-        classified_request = Classifier.classify(self.request)
-        if classified_request.is_malicious():
-            page_name = self.__handle_malicious(classified_request)
+        self.request = Classifier.classify(self.request)
+        if self.request.is_malicious:
+            page_name = self.__handle_malicious()
         else:
             page_name = self.__handle_legitimate()
-        classified_request.set_return_path(page_name)
-        return serve_page(classified_request)
+        self.request.set_return_path(page_name)
+        return serve_page(self.request)
 
 
 def write_output(bytes_to_write):

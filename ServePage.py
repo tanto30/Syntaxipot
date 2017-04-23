@@ -20,9 +20,9 @@ def serve_page(request_obj):
     :return: HTTP Response for the request as str 
     """
     # Full path to requested file
-    url = "http://127.0.0.1" + request_obj.return_path
+    url = "http://localhost" + request_obj.return_path
     # POST data as bytes object, None if request_obj.method = 'GET'
-    data = request_obj.POST_params_bytes
+    data = request_obj.POST_params
     req = urllib.request.Request(url, data,
                                  request_obj.headers,
                                  method=request_obj.method)
