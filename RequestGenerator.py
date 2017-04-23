@@ -62,4 +62,4 @@ def get_post_params():
         return post_params, post_params_dict
 
     else:
-        return None, {}
+        return "", {}
