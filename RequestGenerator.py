@@ -24,9 +24,7 @@ def make_raw_request(headers, post_params):
     # Adds the headers.
     for header in headers:
         raw_request += header + ": " + headers[header] + "\r\n"
-    raw_request += "\r\n"
-    if environ["REQUEST_METHOD"] == "POST":
-        raw_request += post_params # Adds the parameters provided to POST requests.
+    raw_request += "\r\n" + post_params
     return raw_request
 
 
