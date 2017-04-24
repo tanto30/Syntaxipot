@@ -1,14 +1,11 @@
-import os.path
-
-
 def sqli_error_page(query):
-    file_name = "fake_page.txt"
-    with open(file_name, "w") as f:
-        fpage = open("fake_page.txt")
-        page = fpage.read()
-        f.write(page.format(query=query))
-        fpage.close()
-    return file_name
+    generated_sqli_path = "fake_sqli_page.txt"
+    with open(generated_sqli_path, "w") as wfile:
+        rfile = open("fake_page.txt")
+        rfile_contents = rfile.read()
+        wfile.write(rfile_contents.format(query=query))
+        rfile.close()
+    return generated_sqli_path
 
 
 def generate_page_filename(query, vuln_type):

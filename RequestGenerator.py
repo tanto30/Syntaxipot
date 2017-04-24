@@ -1,5 +1,4 @@
 import sys
-import urllib.parse
 
 from os import environ  # The environment variables.
 from Request import Request
@@ -8,12 +7,11 @@ from Request import Request
 def generate_request():
     """Generates an instance of the Request class."""
     headers = get_headers()
-    post_params, post_params_dict = get_post_params()
+    post_params = get_post_params()
     raw_request = make_raw_request(headers, post_params)
     return Request(environ["REMOTE_ADDR"], environ["REMOTE_PORT"], raw_request,
                    environ["REQUEST_METHOD"],
-                   environ["REQUEST_URI"], headers, post_params,
-                   post_params_dict)
+                   environ["REQUEST_URI"], headers, post_params)
 
 
 def make_raw_request(headers, post_params):
@@ -24,7 +22,7 @@ def make_raw_request(headers, post_params):
     # Adds the headers.
     for header in headers:
         raw_request += header + ": " + headers[header] + "\r\n"
-    raw_request += "\r\n" + post_params
+    raw_request += "\r\n"  # + post_params <- This a bytes object, str+bytes raises an exception/
     return raw_request
 
 
@@ -57,9 +55,8 @@ def get_post_params():
     """Returns the parameters provided to a POST request.
     These parameters are provided through STDIN."""
     if environ["REQUEST_METHOD"] == "POST":  # If the request is a POST request...
-        post_params = sys.stdin.read()
-        post_params_dict = urllib.parse.parse_qs(post_params)
-        return post_params, post_params_dict
+        post_params = sys.stdin.buffer.read()
+        return post_params
 
     else:
-        return "", {}
+        return b''

@@ -13,7 +13,7 @@ class HoneypotRequestHandler:
 
     def __handle_malicious(self):
         log(self.request)
-        page_name = generate_page_filename(self.request.query_params,
+        page_name = "/" + generate_page_filename(self.request.query_params,
                                            self.request.attack_type)
         return page_name
 
@@ -22,7 +22,7 @@ class HoneypotRequestHandler:
 
     def handle_request(self):
         self.request = Classifier.classify(self.request)
-        if self.request.is_malicious:
+        if self.request.is_malicious():
             page_name = self.__handle_malicious()
         else:
             page_name = self.__handle_legitimate()

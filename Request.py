@@ -18,11 +18,9 @@ class Request:
     headers - A dictionary that represents the headers of the request.
     POST_params - The parameters of the POST request as bytes(e.g. user=admin&pass=123).
                         None if request.method = 'GET'
-    POST_params_dict - The  parameters of the POST request as dict
-                       (param:value, e.g. {'user':'admin', 'pass':'123'})
     """
 
-    def __init__(self, ip, port, raw_request, method, path, headers, post_parameters, post_dict):
+    def __init__(self, ip, port, raw_request, method, path, headers, post_parameters):
         """
         
         :param ip: e.g. '127.0.0.1'
@@ -39,13 +37,12 @@ class Request:
         self.raw_request = raw_request
         self.method = method
         # Parse the url into 6 components  <scheme>://<netloc>/<path>;<params>?<query>#<fragment>
+        path = urllib.parse.unquote(path)
         url_parsed = urllib.parse.urlparse(path)
         self.path = url_parsed.path
         self.query_params = url_parsed.query
 
         self.POST_params = post_parameters
-        self.POST_params_dict = post_dict
-
         # construct a dictionary containing the headers
         self.headers = headers
 
@@ -71,9 +68,9 @@ class ClassifiedRequest(Request):
         """
         Request.__init__(self, request.ip, request.port, request.raw_request,
                          request.method, request.path, request.headers,
-                         request.POST_params, request.POST_params_dict)
+                         request.POST_params)
         self.malicious = malicious
-        self.type = attack_type
+        self.attack_type = attack_type
         self.return_path = self.path
 
     def is_malicious(self):
