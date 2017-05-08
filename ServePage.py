@@ -6,14 +6,23 @@ import urllib.error
 def headers_dict_to_str(header_dict):
 	header_str = ''
 	for field, value in header_dict.items():
-		header_str += '{}: {}\r\n'.format(field, value)
+		header = '{}: {}\r\n'.format(field, value)
+		if field == "Status":
+			# Status must be the first header
+			header_str = header + header_str
+		else:
+			header_str += header
 	return bytes(header_str, encoding='utf-8')
 
 
 def response_to_bytes(resp):
+	"""
+	:param resp: urllib.request.Response instance
+	:return: bytes of response
+	"""
 	header_dict = dict(resp.info())
 	if isinstance(resp, urllib.error.HTTPError):
-		header_dict["Status"] = resp.msg
+		header_dict["Status"] = '{} {}'.format(resp.code, resp.msg)
 	headers_bytes = headers_dict_to_str(header_dict)
 	body = resp.read()
 	return headers_bytes + b'\r\n' + body
@@ -22,7 +31,7 @@ def response_to_bytes(resp):
 def serve_page(request_obj):
 	"""
 	:param request_obj: instance of Request.ClassifiedRequest
-	:return: HTTP Response for the request as str 
+	:return: HTTP Response for the request as bytes 
 	"""
 	with open("Debug.txt", 'a') as f:
 		f.write(str(request_obj)+"\n")
