@@ -1,4 +1,5 @@
 import pylibinjection
+import urllib.parse
 from Request import ClassifiedRequest
 
 
@@ -24,8 +25,9 @@ def classify(request):
 	malicious = False
 	# attack type: empty string if not malicious is False
 	attack_type = ""
+	raw_decoded = urllib.parse.unquote_plus(request.raw_request)
 	for check in checks:
-		malicious = check(request.raw_request)
+		malicious = check(raw_decoded)
 		if malicious:
 			attack_type = checks[check]
 			break
