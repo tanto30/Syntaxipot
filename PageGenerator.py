@@ -1,6 +1,6 @@
 def sqli_error_page(query):
     generated_sqli_path = "fake_sqli_page.html"
-    with open("..\\htdocs\\"+generated_sqli_path, "w") as wfile:
+    with open("..\\htdocs\\" + generated_sqli_path, "w") as wfile:
         rfile = open("fake_page.txt")
         rfile_contents = rfile.read()
         wfile.write(rfile_contents.format(query=query))

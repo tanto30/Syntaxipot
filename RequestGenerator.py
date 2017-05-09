@@ -1,6 +1,6 @@
 import sys
-
 from os import environ  # The environment variables.
+
 from Request import Request
 
 
@@ -54,7 +54,8 @@ def parse_header(field):
 def get_post_params():
     """Returns the parameters provided to a POST request.
     These parameters are provided through STDIN."""
-    if environ["REQUEST_METHOD"] == "POST":  # If the request is a POST request...
+    if environ[
+        "REQUEST_METHOD"] == "POST":  # If the request is a POST request...
         post_params = sys.stdin.buffer.read()
         return post_params
 

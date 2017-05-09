@@ -20,7 +20,8 @@ class Request:
                         None if request.method = 'GET'
     """
 
-    def __init__(self, ip, port, raw_request, method, path, headers, post_parameters):
+    def __init__(self, ip, port, raw_request, method, path, headers,
+                 post_parameters):
         """
         
         :param ip: e.g. '127.0.0.1'
@@ -37,11 +38,10 @@ class Request:
         self.raw_request = raw_request
         self.method = method
         # Parse the url into 6 components  <scheme>://<netloc>/<path>;<params>?<query>#<fragment>
-        path = urllib.parse.unquote(path)
+        path = urllib.parse.unquote_plus(path)
         url_parsed = urllib.parse.urlparse(path)
         self.path = url_parsed.path
         self.query_params = url_parsed.query
-
         self.POST_params = post_parameters
         # construct a dictionary containing the headers
         self.headers = headers
@@ -59,8 +59,8 @@ class ClassifiedRequest(Request):
     Child Class of request, ClassifiedRequest is intended to be used by the Classifier,
     to check if a request is malicious and what type of attack it is if is malicious.
     """
-    def __init__(self, request, malicious, attack_type):
 
+    def __init__(self, request, malicious, attack_type):
         """
         :param malicious: boolean, True if request is malicious 
         :param attack_type: string, the type of the attack, e.g., 'xss', 'sqli',
@@ -69,6 +69,8 @@ class ClassifiedRequest(Request):
         Request.__init__(self, request.ip, request.port, request.raw_request,
                          request.method, request.path, request.headers,
                          request.POST_params)
+
+        self.query_params = request.query_params
         self.malicious = malicious
         self.attack_type = attack_type
         self.return_path = self.path

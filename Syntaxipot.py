@@ -1,11 +1,12 @@
 #! python
 import sys
+
 import Classifier
 import RequestGenerator
 from PageGenerator import generate_page_filename
 from ServePage import serve_page
 from logger import log
-from AuxiliaryDecorators import logErrors
+
 
 class HoneypotRequestHandler:
     def __init__(self):
@@ -14,7 +15,7 @@ class HoneypotRequestHandler:
     def __handle_malicious(self):
         log(self.request)
         page_name = "/" + generate_page_filename(self.request.query_params,
-                                           self.request.attack_type)
+                                                 self.request.attack_type)
         return page_name
 
     def __handle_legitimate(self):
@@ -35,7 +36,6 @@ def write_output(bytes_to_write):
     sys.stdout.buffer.flush()
 
 
-@logErrors
 def run():
     handler = HoneypotRequestHandler()
     out = handler.handle_request()
