@@ -150,4 +150,7 @@ fabric.properties
 # Sonarlint plugin
 .idea/sonarlint
 
+# Exclude all .idea in general
+.idea
+
 # End of https://www.gitignore.io/api/pycharm
