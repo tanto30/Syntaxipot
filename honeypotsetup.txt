@@ -1,8 +1,0 @@
-
-Move the httpd.conf file in this directory to xampp/apache/conf/
-(Replace the file that is already there)
-
-Add shebang line for python in xampp/cgi-bin/Syntaxipot.py 
-For example (C:\Python36\python.exe):
-	#!/Python36/python.exe
-	"""rest of python code"""
