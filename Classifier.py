@@ -1,6 +1,6 @@
 import pylibinjection
+import re
 import urllib.parse
-
 from Request import ClassifiedRequest
 
 
@@ -9,6 +9,14 @@ def detect_sqli(request):
 
 
 def detect_xss(request):
+    m = re.search(r"((%3C)|<)((%2F)|/)*[a-z0-9%]+((%3E)|>)", request)
+    if m is not None:
+        return True
+    m = re.search(
+        r"((%3C)|<)((%69)|i|(%49))((%6D)|m|(%4D))((%67)|g|(%47))[^\n]+((%3E)|>)",
+        request)
+    if m is not None:
+        return True
     return False
 
 
