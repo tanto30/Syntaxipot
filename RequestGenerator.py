@@ -15,10 +15,10 @@ def generate_request():
 
 
 def make_raw_request(headers, post_params):
-    """Makes the raw HTTP request using the environment variables."""
+    """Makes the raw HTTP classified_request using the environment variables."""
     raw_request = environ["REQUEST_METHOD"] + " " + \
                   environ["REQUEST_URI"] + \
-                  " HTTP/1.1\r\n"  # The request line.
+                  " HTTP/1.1\r\n"  # The classified_request line.
     # Adds the headers.
     for header in headers:
         raw_request += header + ": " + headers[header] + "\r\n"
@@ -28,7 +28,7 @@ def make_raw_request(headers, post_params):
 
 def get_headers():
     """Gets the headers out of the environment variables.
-    This function is necessary because the headers of a request are not provided in a convenient way such as
+    This function is necessary because the headers of a classified_request are not provided in a convenient way such as
     a dictionary - each header is provided as an environment variable."""
     headers = {}
     for field in environ:
@@ -41,9 +41,9 @@ def get_headers():
 
 
 def parse_header(field):
-    """Parses a single header key and converts it to the way it appears on a HTTP request.
+    """Parses a single header key and converts it to the way it appears on a HTTP classified_request.
     This function is necessary because the headers' keys are provided in the environment variables
-    not as they appear in a HTTP request.
+    not as they appear in a HTTP classified_request.
     For example, it converts HTTP_USER_AGENT to User-Agent."""
     header_key = field[5:]  # Gets rid of the "HTTP_" prefix of the field.
     header_list = header_key.split("_")
@@ -52,10 +52,10 @@ def parse_header(field):
 
 
 def get_post_params():
-    """Returns the parameters provided to a POST request.
+    """Returns the parameters provided to a POST classified_request.
     These parameters are provided through STDIN."""
     if environ[
-        "REQUEST_METHOD"] == "POST":  # If the request is a POST request...
+        "REQUEST_METHOD"] == "POST":  # If the classified_request is a POST classified_request...
         post_params = sys.stdin.buffer.read()
         return post_params
 

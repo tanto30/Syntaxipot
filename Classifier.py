@@ -22,7 +22,7 @@ def detect_xss(request):
 
 def classify(request):
     """
-    :param request: object, Request.request instance
+    :param request: object, Request.classified_request instance
     :return: object, ClassifiedRequest instance
     """
 

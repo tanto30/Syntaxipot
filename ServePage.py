@@ -17,7 +17,7 @@ def headers_dict_to_str(header_dict):
 
 def response_to_bytes(resp):
     """
-    :param resp: urllib.request.Response instance
+    :param resp: urllib.classified_request.Response instance
     :return: bytes of response
     """
     header_dict = dict(resp.info())
@@ -28,18 +28,18 @@ def response_to_bytes(resp):
     return headers_bytes + b'\r\n' + body
 
 
-def serve_page(request_obj):
+def serve_page(classified_request):
     """
-    :param request_obj: instance of Request.ClassifiedRequest
-    :return: HTTP Response for the request as bytes 
+    :param classified_request: instance of Request.ClassifiedRequest
+    :return: HTTP Response for the classified_request as bytes
     """
     # Full path to requested file
-    url = "http://127.0.0.1" + urllib.parse.quote(request_obj.return_path)
-    # POST data as bytes object, None if request_obj.method = 'GET'
-    data = request_obj.POST_params
+    url = "http://127.0.0.1" + urllib.parse.quote(classified_request.full_url)
+    # POST data as bytes object, None if classified_request.method = 'GET'
+    data = classified_request.POST_params
     req = urllib.request.Request(url, data,
-                                 request_obj.headers,
-                                 method=request_obj.method)
+                                 classified_request.headers,
+                                 method=classified_request.method)
     try:
         resp = urllib.request.urlopen(req)
     except urllib.error.HTTPError as e:
