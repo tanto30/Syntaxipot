@@ -20,7 +20,7 @@ class Request:
                         None if classified_request.method = 'GET'
     """
 
-    def __init__(self, ip, port, raw_request, method, full_url, headers,
+    def __init__(self, ip, port, raw_request, method, url, headers,
                  post_parameters):
         """
         
@@ -28,7 +28,7 @@ class Request:
         :param port: e.g. 5912 (unsure if int or str)
         :param raw_request: whole HTTP Request, with classified_request line, headers and body. (string)
         :param method: e.g. 'GET' 
-        :param full_url: whole path of url <path>;<params>?<query>#<fragment>
+        :param url: whole path of url <path>;<params>?<query>#<fragment>
         :param headers: BaseHTTPRequestHandler.headers 
         :param post_parameters: e.g. user=admin&pass=123
         """
@@ -36,10 +36,10 @@ class Request:
         self.port = port
         self.raw_request = raw_request
         self.method = method
-        # Parse the url into 6 components  <scheme>://<netloc>/<full_url>;<params>?<query>#<fragment>
-        full_url = urllib.parse.unquote_plus(full_url)
-        self.full_url = urllib.parse.urlparse(full_url)
-        self.query_params = self.full_url.query
+        # Parse the url into 6 components  <scheme>://<netloc>/<url>;<params>?<query>#<fragment>
+        self.full_url = urllib.parse.unquote_plus(url)
+        parsed_url = urllib.parse.urlparse(self.full_url)
+        self.query_params = parsed_url.query
         self.POST_params = post_parameters
         # construct a dictionary containing the headers
         self.headers = headers
