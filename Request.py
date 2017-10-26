@@ -39,7 +39,7 @@ class Request:
         # Parse the url into 6 components  <scheme>://<netloc>/<full_url>;<params>?<query>#<fragment>
         full_url = urllib.parse.unquote_plus(full_url)
         self.full_url = urllib.parse.urlparse(full_url)
-        self.query_params = full_url.query
+        self.query_params = self.full_url.query
         self.POST_params = post_parameters
         # construct a dictionary containing the headers
         self.headers = headers
