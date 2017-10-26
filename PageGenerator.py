@@ -1,4 +1,5 @@
 import pickle
+from os.path import isfile
 
 from Request import ClassifiedRequest
 
@@ -25,12 +26,15 @@ def generate_page_filename(request: ClassifiedRequest):
 
 def xss_page(request):
     url = request.full_url
-    with open('filename.pickle', 'rb') as handle:
-        xss_url_to_ip = pickle.load(handle)
+    if isfile('banned.pickle'):
+        with open('banned.pickle', 'rb') as handle:
+            xss_url_to_ip = pickle.load(handle)
+    else:
+        xss_url_to_ip = dict()
     # New XSS attack - add to banned list.
     if url not in xss_url_to_ip:
         xss_url_to_ip[url] = request.ip
-        with open('filename.pickle', 'wb') as handle:
+        with open('banned.pickle', 'wb') as handle:
             pickle.dump(xss_url_to_ip, handle, protocol=pickle.HIGHEST_PROTOCOL)
         return url
     # Old XSS attack, if attacker requested url, give him the malicious url
