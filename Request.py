@@ -36,8 +36,8 @@ class Request:
         self.port = port
         self.raw_request = raw_request
         self.method = method
+        self.full_url = url
         # Parse the url into 6 components  <scheme>://<netloc>/<url>;<params>?<query>#<fragment>
-        self.full_url = urllib.parse.unquote_plus(url)
         parsed_url = urllib.parse.urlparse(self.full_url)
         self.query_params = parsed_url.query
         self.POST_params = post_parameters

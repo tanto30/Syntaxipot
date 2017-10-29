@@ -34,8 +34,7 @@ def serve_page(classified_request):
     :return: HTTP Response for the classified_request as bytes
     """
     # Full path to requested file
-    url = "http://127.0.0.1" + urllib.parse.quote(
-        urllib.parse.quote_plus(classified_request.full_url))
+    url = "http://127.0.0.1/" + classified_request.full_url
     # POST data as bytes object, None if classified_request.method = 'GET'
     data = classified_request.POST_params
     req = urllib.request.Request(url, data,
