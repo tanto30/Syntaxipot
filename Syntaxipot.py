@@ -15,6 +15,8 @@ class HoneypotRequestHandler:
     def __handle_malicious(self):
         log(self.classified_request)
         page_name = "/" + generate_page_filename(self.classified_request)
+        # Not so full
+        self.classified_request.full_url = page_name
         return page_name
 
     def __handle_legitimate(self):
