@@ -1,5 +1,5 @@
 # Syntaxipot
-Synatxipot is a low interaction web honeypot
+Syntaxipot is a low interaction web honeypot
 
 #### Installation:
 *This is written for an installation on windows, if you run
